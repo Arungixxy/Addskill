@@ -1,0 +1,37 @@
+class Solution {
+    public int binarySearch(int[] nums,int s,int e){
+        if(s>=e){
+            return nums[s];
+        }
+        int  mid=s+(e-s)/2;
+        //single element
+        if(nums[mid]!=nums[mid-1]&&nums[mid]!=nums[mid+1]){
+            return nums[mid];
+        }
+        //first element so it should exist at even index
+        else if(nums[mid]==nums[mid+1]){
+            if(mid%2==0){
+                return binarySearch(nums,mid+2,e);
+            }
+            else{
+                return binarySearch(nums,s,mid-1);
+            }
+        }
+        //2nd element it should exist at odd index
+        else{
+            if(mid%2==1){
+               return binarySearch(nums,mid+1,e);
+            }
+            else{
+                return binarySearch(nums,s,mid-2);
+            }
+        }
+    }
+    public int singleNonDuplicate(int[] nums) {
+        int len=nums.length;
+        if(len==1){
+            return nums[0];
+        }
+        return binarySearch(nums,0,len-1);
+    }
+}
