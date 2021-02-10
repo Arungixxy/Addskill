@@ -1,0 +1,17 @@
+class Solution {
+   public int findNthDigit(int n) {
+	double nn = 0;
+	int i; // the number of digits of the number of interest
+	// note that it will take 10 iterations at most
+	for (i = 0; nn < n; ++i)
+		nn += 9 * (i + 1) * Math.pow(10, i);
+	nn -= 9 * i * Math.pow(10, i - 1); // undo last update to find a lower bound of n
+	int rem = n - (int) nn - 1; // the remaining part of n within i-digits numbers only
+	int num = (int) (Math.pow(10, i - 1) + rem / i); // the number of interest
+	int digitLoc = i - 1 - (rem % i); // which digit we want from right to left
+	// 10 iterations at most
+	for (int k = 0; k < digitLoc; ++k)
+		num /= 10;
+	return num % 10;
+}
+}
