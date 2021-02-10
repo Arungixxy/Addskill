@@ -1,0 +1,21 @@
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ArrayList<Integer> ar=new ArrayList<>();
+        while(head!=null){
+            ar.add(head.val);
+            head=head.next;
+        }
+        Object arr[]=ar.toArray();
+        int arrr[]=new int[arr.length];
+        
+        for(int i=0;i<arr.length;i++){
+            arrr[i]=(int)arr[i];
+        }
+        
+        for(int i=0;i<arrr.length/2;i++){
+            if(arrr[i]!=arrr[arrr.length-i-1])
+                return false;
+        }
+        return true;
+    }
+}
