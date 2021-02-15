@@ -1,0 +1,29 @@
+class Solution {
+    public List<String> commonChars(String[] A) {
+        int[] charCount = new int[26];
+        Arrays.fill(charCount, Integer.MAX_VALUE);
+
+        int[] charCount2 = new int[26];
+        for (String a : A) {
+            int length = a.length();
+            for (int i = 0; i < length; i++) {
+                charCount2[a.charAt(i) - 'a']++;
+            }
+
+            for (int i = 0; i < 26; i++) {
+                charCount[i] = Math.min(charCount2[i], charCount[i]);
+            }
+            Arrays.fill(charCount2, 0);
+        }
+
+        List<String> commonChars = new ArrayList<>();
+        for (int i = 0; i < 26; i++) {
+            while (charCount[i] > 0) {
+                commonChars.add(String.valueOf((char) ('a' + i)));
+                charCount[i]--;
+            }
+        }
+
+        return commonChars;
+    }
+}
