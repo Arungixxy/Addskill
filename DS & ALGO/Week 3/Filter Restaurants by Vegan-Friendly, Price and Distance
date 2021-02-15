@@ -1,0 +1,36 @@
+class Solution {
+    public List<Integer> filterRestaurants(int[][] restaurants, int veganFriendly, int maxPrice, int maxDistance) {
+        
+        List<Pair<Integer, Integer>> queryResult = new ArrayList<>();
+        
+        for (int i = 0; i < restaurants.length; i++) {
+            int[] restaurant = restaurants[i];
+            
+            if ((veganFriendly == 1 && restaurant[2] == 0) || restaurant[3] > maxPrice || restaurant[4] > maxDistance) 
+                continue; 
+    
+            queryResult.add(new Pair(restaurant[0], i));
+        }
+        
+        Collections.sort(queryResult, (i1, i2) -> {
+            int id1 = i1.getKey();
+            int id2 = i2.getKey();
+            int idx1 = i1.getValue();
+            int idx2 = i2.getValue();
+            
+            if (restaurants[idx2][1] == restaurants[idx1][1]) {
+                return id2 - id1;
+            }
+            
+            return restaurants[idx2][1] - restaurants[idx1][1];
+        });
+        
+        List<Integer> ids = new ArrayList<>();
+        for (Pair<Integer, Integer> pair: queryResult) {
+            ids.add(pair.getKey());
+        }
+    
+
+        return ids;
+    }
+}
