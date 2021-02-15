@@ -1,0 +1,60 @@
+class Solution {
+    public int search(int[] nums, int target) {
+    
+        if(nums==null || nums.length==0)
+            return -1;
+        
+        if (nums.length==1 && nums[0]==target)
+            return 0;
+        
+        
+        
+        int i=0;
+        int l=nums.length-1;
+        
+		//Find the lowest value
+        while(i<l){
+            int mid=i+(l-i)/2;
+            if(nums[mid]>nums[l]){
+                i=mid+1;
+            }else{
+                 l=mid;
+            }
+        }
+        
+		//if lowest is first integer then simple binary search
+        if(i==0){
+            if(nums[nums.length-1]>=target){
+               return getData(0, nums.length-1, nums,target);       
+           }
+        }
+		//if lowest lie within another location then use binary search at two sorted array starting from 0 to lowest-1 pointer and lowest to end.
+        else{
+            if(nums[i-1]>=target){
+              if(nums[0]<=target){
+                 return getData(0, i-1, nums,target);        
+              }else{
+                 return getData(i, nums.length-1, nums,target);   
+              }  
+            }  
+        }
+        
+        return -1;
+        
+    }
+    
+    public int getData(int i, int l, int[] nums, int target){
+        while(i<=l){
+                 int mid=l+(i-l)/2;
+                 if(target==nums[mid])
+                     return mid;
+                 if(target>nums[mid])
+                     i=mid+1;
+                 else
+                     l=mid-1;
+                }
+        return -1;
+    }
+    
+    
+}
