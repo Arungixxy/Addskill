@@ -1,0 +1,11 @@
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+        LinkedList<int[]> list = new LinkedList<>();
+        for (int[] a : intervals) {
+            if (list.isEmpty() || a[0] > list.getLast()[1]) list.add(new int[]{a[0], a[1]});
+            else list.getLast()[1] = Math.max(list.getLast()[1], a[1]);
+        }
+        return list.toArray(new int[0][2]);
+    }
+}
