@@ -1,0 +1,29 @@
+class Solution {
+    public ListNode insertionSortList(ListNode head) {
+        
+        if(head==null||head.next==null){
+            return head;
+        }
+     
+	 // the idea is same as interstion sort using array
+        ListNode curNode = head.next;
+        while(curNode!=null){
+            // for every iteration tempNode will starts from head,as like insertion sort
+            ListNode tempNode = head;
+            while(tempNode!=curNode){
+                if(tempNode.val>curNode.val){
+                    //code for swaping values
+                    int t = tempNode.val;
+                    tempNode.val = curNode.val;
+                    curNode.val = t;    
+                }else{
+                    // moving to next node
+                    tempNode = tempNode.next;
+                }  
+            }
+            //moving to next node
+           curNode = curNode.next;
+        }
+        return head;
+    }
+}
