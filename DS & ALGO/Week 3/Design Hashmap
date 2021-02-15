@@ -1,0 +1,88 @@
+class MyHashMap {
+
+    /** Initialize your data structure here. */
+    private Node[] map;
+    private int size;
+    public MyHashMap() {
+        this.map = new Node[1000];
+        this.size = map.length;
+    }
+    
+    /** value will always be non-negative. */
+    public void put(int key, int value) {
+        Integer num = new Integer(key);
+        int index = num.hashCode() % size;
+        
+        if(map[index] == null) {
+            map[index] = new Node(key, value);
+        } else {
+            Node node = map[index];
+            if(node.key == key) {
+                node.val = value;
+                return;
+            }
+            while(node.next != null) {
+                node = node.next;
+                if(node.key == key) {
+                    node.val = value;
+                    return;
+                }
+            }
+            node.next = new Node(key, value);
+        }
+    }
+    
+    /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
+    public int get(int key) {
+        Integer num = new Integer(key);
+        int index = num.hashCode() % size;
+        
+        if(map[index] != null) {
+            Node node = map[index];
+            while(node != null) {
+                if(node.key == key) return node.val;
+                node = node.next;
+            }
+        }
+        return -1;
+    }
+    
+    /** Removes the mapping of the specified value key if this map contains a mapping for the key */
+    public void remove(int key) {
+        Integer num = new Integer(key);
+        int index = num.hashCode() % size;
+        
+        if(map[index] != null) {
+            Node node = map[index];
+            
+            /* if the head itself is the key we are looking for */
+            if(node.key == key) {
+                map[index] = map[index].next;
+            } else {
+                while(node != null && node.next != null) {
+                    if(node.next.key == key) {
+                        node.next = node.next.next;
+                    } else {
+                        node = node.next;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+class Node {
+    int key;
+    int val;
+    Node next;
+    
+    Node(int key, int val) {
+        this.key = key;
+        this.val = val;
+    }
+    
+    public String toString() {
+        return "[" + key + ", " + val + "]";
+    }
+}
