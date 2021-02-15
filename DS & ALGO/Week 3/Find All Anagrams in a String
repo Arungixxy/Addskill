@@ -1,0 +1,51 @@
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        
+        List<Integer> result = new ArrayList<>();
+
+        int sLen = s.length();
+        int pLen = p.length();
+        
+        // no solution if the pattern is larger than the source string
+        if(pLen > sLen) {
+            return result;
+        }
+        
+        // use array as pattern map to store [char -> char-count]
+        int[] pCount = new int[26];  // lower case chars only
+        for(char ch : p.toCharArray()) {
+            pCount[ch-'a']=pCount[ch-'a']+1;
+        }
+        
+        // use array as source string map that will be limited to the slizing window size (i.e. up to pLen)
+        int[] sCount = new int[26];
+        
+        int slidingWindowSize=0;
+        
+        // iterate through source string
+        for(int i=0; i<sLen; i++) {
+            
+            // add to the sMap containing [char -> char-count]
+            sCount[(int)s.charAt(i) - 'a']++;
+            slidingWindowSize++;
+            
+            // if the sliding window has reached the pLen size
+            if(slidingWindowSize==pLen) {
+                
+                
+                // if arrays are equal, we have a match!
+                if(Arrays.equals(sCount, pCount)) {
+                    result.add(i-pLen+1);  // imp, index is zero based, and so adjustment
+                }
+                
+                // remove the first character from the sliding window and shrink its size by 1.
+                Character charToRemove = s.charAt(i-pLen+1);  // imp, index is zero based, and so adjustment
+                sCount[(int)charToRemove - 'a']--;
+                slidingWindowSize--;
+            }
+            
+        }
+        
+        return result;
+    }
+}
