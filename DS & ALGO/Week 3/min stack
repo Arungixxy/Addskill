@@ -1,0 +1,41 @@
+ Stack<int[]> stack;
+    int currentMin;
+
+    public MinStack() {
+        stack = new Stack<int[]>();
+        currentMin = Integer.MAX_VALUE;
+    }
+
+    public void push(int x) {
+        int[] arr = new int[2];
+        if (stack.empty()) {
+            currentMin = x;
+            arr[0] = x;
+            arr[1] = currentMin;
+            stack.push(arr);
+        } else {
+            if (x < currentMin)
+                currentMin = x;
+            arr[0] = x;
+            arr[1] = currentMin;
+            stack.push(arr);
+        }
+    }
+
+    public void pop() {
+        stack.pop();
+        if (!stack.empty()) {
+            currentMin = stack.peek()[1];
+        } else {
+            currentMin = Integer.MAX_VALUE;
+        }
+    }
+
+    public int top() {
+        return stack.peek()[0];
+    }
+
+    public int getMin() {
+        return currentMin;
+    }
+}
