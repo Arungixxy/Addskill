@@ -1,0 +1,28 @@
+class Solution {
+    // dfs
+    private long res = Integer.MIN_VALUE;
+    public int widthOfBinaryTree(TreeNode root){
+        Map<Integer, Long[]> map = new HashMap<>();
+        int degree = 0, width = 0;
+        dfs(root, degree, width, map);
+        return (int)res;
+    } 
+    private void dfs(TreeNode root, int degree, long width, Map<Integer, Long[]> map){
+        if(root == null) return;
+        if(!map.containsKey(degree)){
+            map.put(degree, new Long[]{width, width});
+            res = Math.max(res, 1);
+        }
+        else{
+            Long[] tmp = map.get(degree);
+            tmp[0] = tmp[0]<width?tmp[0]:width;
+            tmp[1] = tmp[1]>width?tmp[1]:width;
+            res = Math.max(res, tmp[1]-tmp[0]+1);
+        }
+        degree++;
+        dfs(root.left, degree, 2*width, map);
+        dfs(root.right, degree, 2*width+1, map);
+    }
+
+    
+}
