@@ -1,0 +1,23 @@
+class Solution {
+    
+    int sum = 0;
+    public int sumNumbers(TreeNode root) {
+        if (root != null) 
+            calculateSum(root, 0);
+        return sum;
+    }
+    
+    private void calculateSum(TreeNode root, int pathSum){
+        
+        if (root == null) return;
+        
+        pathSum = pathSum * 10 + root.val;
+        
+        if(root.left == null && root.right == null){
+            sum += pathSum;
+            return;
+        }
+        calculateSum(root.left, pathSum);
+        calculateSum(root.right, pathSum);
+    }
+}
